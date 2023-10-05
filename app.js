@@ -129,3 +129,22 @@ $resetButton.on("click", function(){
 })
 
 $(window).on("load", loadDeck());
+
+// Further Study: Pokemon
+
+function getAllPokemon(){
+    axios.get("https://pokeapi.co/api/v2/pokemon?limit=1000")
+    .then(res => console.log(res))
+    .catch(err => console.log("Error", err))
+}
+
+function random3Pokemon(){
+    for (let i = 0; i < 3; i++){
+        let randNum = Math.floor(Math.random()*1000+1);
+        axios.get(`https://pokeapi.co/api/v2/pokemon/${randNum}`)
+        .then(res => console.log(res.data))
+        .catch(err => console.log("Error", err))
+    }
+}
+
+// further study step 3
