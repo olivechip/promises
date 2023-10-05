@@ -1,0 +1,11 @@
+#cardPile {
+    position: relative;
+    margin: 10px;
+}
+
+.cards {
+    max-height: 10rem;
+    display: inline;
+    top: 30px;
+    left: 25rem;
+}
