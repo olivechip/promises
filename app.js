@@ -104,6 +104,7 @@ function nextCard(){
 }
 
 function autoDraw(){
+    $draw.attr("disabled","");
     count = 0;
     const intID = setInterval(function(){
         if (count == 52){
@@ -139,12 +140,27 @@ function getAllPokemon(){
 }
 
 function random3Pokemon(){
+    let pokeNames = [];
+    let pokeText = [];
     for (let i = 0; i < 3; i++){
         let randNum = Math.floor(Math.random()*1000+1);
         axios.get(`https://pokeapi.co/api/v2/pokemon/${randNum}`)
-        .then(res => console.log(res.data))
+        .then(res => {
+            pokeNames.push(res.data.name)
+            return axios.get(`${res.data.species.url}`)
+        })
+        .then (res => {
+            const entries = res.data.flavor_text_entries;
+            for (let j = 0; j < entries.length; j++){
+                if (entries[j].language.name == 'en'){
+                    pokeText.push(entries[j].flavor_text)
+                    break;
+                } 
+            }
+        })
+        .then(() => {
+                $("#pokemon").append(`<li>${pokeNames[i]}: ${pokeText[i]}</li>`);
+        })
         .catch(err => console.log("Error", err))
     }
 }
-
-// further study step 3
